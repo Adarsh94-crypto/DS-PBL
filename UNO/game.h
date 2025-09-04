@@ -43,11 +43,6 @@ void next_turn(Game *game){
 int play_card(Game *game, player *player){
     int draw=0;
     player = get_current_player(game);
-    // printf("%s ",color_to_string(game->discard_pile.cards[game->discard_pile.top-1].color));
-    // printf("%s ",type_to_string(game->discard_pile.cards[game->discard_pile.top-1].type));
-    // if(game->discard_pile.cards[game->discard_pile.top].type==Number){
-    //     printf("%d ",game->discard_pile.cards[game->discard_pile.top-1].number);
-    // }
     Card playeable[player->hand.size];
     int count = get_valid_cards(&(player->hand), game->discard_pile.cards[game->discard_pile.top-1],playeable);
 
