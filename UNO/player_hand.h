@@ -6,6 +6,7 @@
 #include "cards.h"
 #include "deck.h"
 
+
 typedef struct hand_node{
     Card card ;
     struct hand_node *next ;
@@ -49,8 +50,9 @@ int compare_cards(Card a, Card b) {
     return 1;
 }
 int can_play(Card card , Card discard_pile_top){
+    if(card.type == Wild_draw_4 || card.type == Wild) return 1 ;
     if(card.color==discard_pile_top.color) return 1 ;
-//    if(card.type != Number && card.type == discard_pile_top.type) return 1 ;
+    if(card.type != Number && card.type == discard_pile_top.type) return 1 ;
     if (card.type == Number && card.number == discard_pile_top.number) return 1;
     return 0;    
 }
@@ -101,11 +103,11 @@ void remove_card(hand *hand, Card card){
 }
 const char* color_to_string(card_color color) {
     switch (color) {
-        case RED: return "Red";
-        case GREEN: return "Green";
-        case BLUE: return "Blue";
-        case YELLOW: return "Yellow";
-        default: return "UnknownColor";
+        case COLOR_RED: return "Red";
+        case COLOR_GREEN: return "Green";
+        case COLOR_BLUE: return "Blue";
+        case COLOR_YELLOW: return "Yellow";
+        default: return "Wild";
     }
 }
 
@@ -124,10 +126,14 @@ const char* type_to_string(card_type type) {
 void display_hand(hand *hand){
     hand_node * temp = hand -> head;
     while(temp){
-        printf("%s ",color_to_string(temp->card.color));
-        printf("%s ",type_to_string(temp->card.type));
-        if(temp->card.type == Number){
-            printf(" %d ",temp->card.number);
+        if(temp->card.type == Wild || temp -> card.type == Wild_draw_4){
+            printf("%s ",type_to_string(temp->card.type));
+        }else {
+            printf("%s ",color_to_string(temp->card.color)); 
+            printf("%s ",type_to_string(temp->card.type));   
+            if(temp->card.type == Number){
+                printf(" %d ",temp->card.number);
+            }
         }
         temp = temp->next ;
         printf("\n");

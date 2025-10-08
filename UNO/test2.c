@@ -8,7 +8,7 @@
 
 int main() {
     Game game;
-    char player_names[2][32] = {"Alice", "Bob"}; // test with 2 players first
+    char player_names[2][32] = {"PLAYER 1", "PLAYER 2"}; // test with 2 players first
 
     init_game(&game, 2, player_names);
 
@@ -26,7 +26,7 @@ int main() {
     while (winner == -1) {
         sleep(1);
         printf("\033[2J\033[H");
-        player *current = get_current_player(&game);
+        Player *current = get_current_player(&game);
 
         printf("\n=============================\n");
         printf("It's %s's turn!\n", current->name);

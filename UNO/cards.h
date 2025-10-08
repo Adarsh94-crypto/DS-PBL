@@ -5,18 +5,19 @@
 
 
 typedef enum {
-    RED ,
-    GREEN ,
-    BLUE ,
-    YELLOW 
+    COLOR_RED ,       //1
+    COLOR_GREEN ,     //2
+    COLOR_BLUE ,      //3
+    COLOR_YELLOW,      //4
+    COLOR_NONE
 }card_color ;
 
 typedef enum {
     Number ,
     Skip ,
-    Wild_draw_4 ,
     Draw_2 ,
     Reverse ,
+    Wild_draw_4 ,
     Wild 
 }card_type ;
 
