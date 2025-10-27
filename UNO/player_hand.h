@@ -111,11 +111,11 @@ void remove_card(hand *hand, Card card){       //remove a specific card from han
 
 const char* color_to_string(card_color color) {
     switch (color) {
-        case RED: return "Red";
-        case GREEN: return "Green";
-        case BLUE: return "Blue";
-        case YELLOW: return "Yellow";
-        default: return "UnknownColor";
+        case COLOR_RED: return "Red";
+        case COLOR_GREEN: return "Green";
+        case COLOR_BLUE: return "Blue";
+        case COLOR_YELLOW: return "Yellow";
+        default: return "Wild";
     }
 }
 
