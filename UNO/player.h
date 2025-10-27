@@ -7,7 +7,7 @@
 #include "player_hand.h"
 #include "deck.h"
 
-typedef struct Player{
+typedef struct player{
     int id ; 
     char name[32] ;
     hand hand ;
