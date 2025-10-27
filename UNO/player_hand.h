@@ -1,3 +1,4 @@
+//individual player's hand
 #ifndef PLAYER_HAND_H   
 #define PLAYER_HAND_H   
 
@@ -5,27 +6,26 @@
 #include <stdio.h>
 #include "cards.h"
 #include "deck.h"
-
-
-typedef struct hand_node{
+//DS
+typedef struct hand_node{      //single card in hand, double ll
     Card card ;
     struct hand_node *next ;
     struct hand_node *prev ;
 }hand_node; 
 
-typedef struct hand{
+typedef struct hand{          //entire hand, ll
     hand_node *head ;
     hand_node *tail ;
     int size ;
 }hand ;
 
-void init_hand(hand *hand){
+void init_hand(hand *hand){       
     hand -> head = NULL; 
     hand -> tail = NULL;
     hand -> size = 0 ;
 }
 
-void add_card(hand *hand, Deck *deck){
+void add_card(hand *hand, Deck *deck){        //adds deck top card to tail of the hand
     Card draw = draw_card(deck);
     hand_node *node =(hand_node *)malloc(sizeof(hand_node));
     node ->card = draw ;
@@ -43,18 +43,24 @@ void add_card(hand *hand, Deck *deck){
 
     hand -> size++ ;
 }
+
 int compare_cards(Card a, Card b) {
     if (a.color != b.color) return 0;
     if (a.type != b.type) return 0;
     if (a.type == Number && a.number != b.number) return 0;
     return 1;
 }
-int can_play(Card card , Card discard_pile_top){
-    if(card.type == Wild_draw_4 || card.type == Wild) return 1 ;
-    if(card.color==discard_pile_top.color) return 1 ;
-    if(card.type != Number && card.type == discard_pile_top.type) return 1 ;
-    if (card.type == Number && card.number == discard_pile_top.number) return 1;
-    return 0;    
+int can_play(Card card, Card discard_pile_top){
+    // Wild cards can always be played
+    if(card.type == Wild || card.type == Wild_draw_4) return 1;
+    // Same color
+    if(card.color == discard_pile_top.color)  return 1;
+    // Same number (for Number cards)
+    if(card.type == Number && discard_pile_top.type == Number 
+       && card.number == discard_pile_top.number) return 1;
+    // Same action type (Skip, Reverse, Draw_2)
+    if(card.type != Number && card.type == discard_pile_top.type) return 1;
+    return 0;
 }
 int get_valid_cards(hand *hand, Card discard_pile_top, Card playable[] ){
     hand_node *itr = hand->head ;
@@ -68,7 +74,8 @@ int get_valid_cards(hand *hand, Card discard_pile_top, Card playable[] ){
     }
     return count ;
 }
-void remove_card(hand *hand, Card card){
+
+void remove_card(hand *hand, Card card){       //remove a specific card from hand
     hand_node *itr = hand->head ;
 
     if(hand->size==1){
@@ -101,13 +108,14 @@ void remove_card(hand *hand, Card card){
     free(temp);
     hand->size-- ;
 }
+
 const char* color_to_string(card_color color) {
     switch (color) {
-        case COLOR_RED: return "Red";
-        case COLOR_GREEN: return "Green";
-        case COLOR_BLUE: return "Blue";
-        case COLOR_YELLOW: return "Yellow";
-        default: return "Wild";
+        case RED: return "Red";
+        case GREEN: return "Green";
+        case BLUE: return "Blue";
+        case YELLOW: return "Yellow";
+        default: return "UnknownColor";
     }
 }
 
